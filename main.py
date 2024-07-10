@@ -131,6 +131,41 @@ async def setup_chain(max_tokens , redo , query):
 async def function():
     response  = await setup_chain(1000 , False ,  "Who is the CEO of Google ?")
     return response
+
+def dg_tts(response):
+# Define the API endpoint
+   url = "https://api.deepgram.com/v1/speak?model=aura-asteria-en"
+
+
+# Set your Deepgram API key
+   api_key = "146803b865c9c2ea49f6a2f67d599431242d4b8e"
+
+
+# Define the headers
+   headers = {
+       "Authorization": f"Token {api_key}",
+       "Content-Type": "application/json"
+   }
+
+
+# Define the payload
+   payload = {
+       "text": response
+   }
+
+
+# Make the POST request
+   response_tts = requests.post(url, headers=headers, json=payload)
+
+
+# Check if the request was successful
+   if response_tts.status_code == 200:
+   # Save the response content to a file
+       with open("your_output_file.mp3", "wb") as f:
+           f.write(response_tts.content)
+       print("File saved successfully.")
+   else:
+       print(f"Error: {response_tts.status_code} - {response_tts.text}")
  
 if __name__ == "__main__":
     import uvicorn
