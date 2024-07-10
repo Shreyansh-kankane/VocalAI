@@ -107,6 +107,7 @@ async def setup_chain(max_tokens , redo , query):
         Question: {question}
         Context : {context}
     """
+   
     prompt1 = ChatPromptTemplate.from_template(template)
     prompt2 =  ChatPromptTemplate.from_template(template2)
    
@@ -115,9 +116,7 @@ async def setup_chain(max_tokens , redo , query):
     else:
         prompt = prompt1
  
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=1 , max_tokens=max_tokens ,
-                     openai_api_key=os.getenv("OPENAI_KEY")
-    )
+    llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=1, max_tokens=max_tokens, streaming=True, openai_api_key=os.getenv("OPENAI_KEY"))
  
     rag_chain = (
         {"context": retriever,  "question": RunnablePassthrough()}
