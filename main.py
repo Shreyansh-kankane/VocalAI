@@ -25,6 +25,8 @@ from fastapi import FastAPI
 # import weaviate
 import os
 from dotenv import load_dotenv
+import requests
+
 load_dotenv()
 
 from weaviate_client import client
